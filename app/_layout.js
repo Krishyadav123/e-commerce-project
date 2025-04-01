@@ -11,7 +11,12 @@ export default function RootLayout() {
       {/* <StatusBar style="auto" /> */}
       <Stack>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
+        <Stack.Screen name="(app)/home"  options={{ headerShown: false }} />
+        <Stack.Screen name="filter"  options={{ headerShown: false }} />
+        <Stack.Screen name="search"  options={{ headerShown: false }} />
+        <Stack.Screen name="product/[id]"  options={{ headerShown: false }} />
       </Stack>
     </AuthProvider>
   );
