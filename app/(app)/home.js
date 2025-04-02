@@ -5,9 +5,11 @@ import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
 import { AntDesign } from '@expo/vector-icons';
 import Header from '../../components/Header';
+import OpenFashionComponent from '../../components/OpenFashion';
+import FollowUsSection from '../../components/FollowUpSection';
 // import Carousel from 'react-native-snap-carousel';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const HomeScreen = () => {
   const router = useRouter();
@@ -43,30 +45,30 @@ const HomeScreen = () => {
     { id: 4, name: 'Backpack', price: '$49.99', image: 'https://rukminim2.flixcart.com/image/832/832/xif0q/sari/g/i/i/free-rusulsaree-lorofy-unstitched-original-imah892khvtxxstc.jpeg?q=70', rating: 4.5 },
   ];
   
-  const renderBanner = ({ item }) => {
-    return (
-      <TouchableOpacity 
-        className="relative rounded-xl overflow-hidden"
-        onPress={() => console.log('Banner pressed', item.id)}
-      >
-        <Image 
-          source={{ uri: item.image }} 
-          className="w-full h-48 rounded-xl"
-          resizeMode="cover"
-        />
-        <View className="absolute bottom-0 left-0 right-0 p-4 bg-black/40">
-          <Text className="text-white text-xl font-bold">{item.title}</Text>
-          <Text className="text-white text-sm">Shop Now</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+  // const renderBanner = ({ item }) => {
+  //   return (
+  //     <TouchableOpacity 
+  //       className="relative rounded-xl overflow-hidden"
+  //       onPress={() => console.log('Banner pressed', item.id)}
+  //     >
+  //       <Image 
+  //         source={{ uri: item.image }} 
+  //         className="w-full h-48 rounded-xl"
+  //         resizeMode="cover"
+  //       />
+  //       <View className="absolute bottom-0 left-0 right-0 p-4 bg-black/40">
+  //         <Text className="text-white text-xl font-bold">{item.title}</Text>
+  //         <Text className="text-white text-sm">Shop Now</Text>
+  //       </View>
+  //     </TouchableOpacity>
+  //   );
+  // };
   
   const renderProductItem = (item, index) => {
     return (
       <Animated.View 
         entering={FadeInRight.delay(index * 100).springify()}
-        className="mr-4 w-36 rounded-xl overflow-hidden bg-white"
+        className="w-30 overflow-hidden bg-white"
       >
         <TouchableOpacity 
           onPress={() => router.push(`/product/${item.id}`)}
@@ -74,15 +76,43 @@ const HomeScreen = () => {
         >
           <Image 
             source={{ uri: item.image }} 
-            className="w-full h-44 rounded-t-xl"
+            className="w-full h-44"
             resizeMode="cover"
           />
           <View className="p-2">
-            <Text className="text-sm font-bold text-gray-800" numberOfLines={1}>{item.name}</Text>
-            <Text className="text-sm text-gray-600">{item.price}</Text>
-            <View className="flex-row items-center mt-1">
+            <Text className="text-sm text-center font-bold text-gray-800" numberOfLines={1}>{item.name}</Text>
+            <Text className="text-sm text-center text-gray-600">{item.price}</Text>
+            {/* <View className="flex-row items-center mt-1">
               <Text className="text-xs text-yellow-500">★ {item.rating}</Text>
-            </View>
+            </View> */}
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
+    );
+  };
+
+  
+  const productItemJust = (item, index) => {
+    return (
+      <Animated.View 
+        entering={FadeInRight.delay(index * 100).springify()}
+        className="w-64 overflow-hidden bg-white"
+      >
+        <TouchableOpacity 
+          onPress={() => router.push(`/product/${item.id}`)}
+          className="shadow-sm mt-4 mr-4"
+        >
+          <Image 
+            source={{ uri: item.image }} 
+            className="w-full h-72"
+            resizeMode="cover"
+          />
+          <View className="p-2">
+            <Text className="text-sm text-center font-bold text-gray-800" numberOfLines={1}>{item.name}</Text>
+            <Text className="text-sm text-center text-gray-600">{item.price}</Text>
+            {/* <View className="flex-row items-center mt-1">
+              <Text className="text-xs text-yellow-500">★ {item.rating}</Text>
+            </View> */}
           </View>
         </TouchableOpacity>
       </Animated.View>
@@ -106,12 +136,12 @@ const HomeScreen = () => {
         <Carousel
         loop
         width={width - 32}
-        height={200}
+        height={400}
         autoPlay={true}
         autoPlayInterval={3000}
         data={bannerData}
         renderItem={({ item }) => (
-          <Image source={{ uri: item.image }} style={{ width: '100%', height: 200, resizeMode: 'cover' , borderRadius: 10}} />
+          <Image source={{ uri: item.image }} style={{ width: '100%', height: 500, resizeMode: 'cover' , borderRadius: 10}} />
         )}
       />
         </View>
@@ -153,38 +183,36 @@ const HomeScreen = () => {
           entering={FadeInDown.delay(300).springify()}
           className="mt-6"
         >
-          <View className="flex-row items-center justify-between px-4 mb-3">
-            <Text className="text-lg font-bold text-gray-800">Trending Now</Text>
+         <View className="grid grid-cols-2 gap-4 px-4 mb-3">
+          {trendingProducts.map((item, index) => renderProductItem(item, index))}
+
+         </View>
             <TouchableOpacity>
-              <Text className="text-blue-500">See All</Text>
+              <Text className="text-black font-bold text-lg text-center">Explore more</Text>
             </TouchableOpacity>
-          </View>
-          <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingLeft: 16 }}
-          >
-            {trendingProducts.map((item, index) => renderProductItem(item, index))}
-          </ScrollView>
         </Animated.View>
+
+
+      <View>
+        <OpenFashionComponent />
+      </View>
+
+
         
         {/* New Arrivals Section */}
         <Animated.View 
           entering={FadeInDown.delay(500).springify()}
           className="mt-6"
         >
-          <View className="flex-row items-center justify-between px-4 mb-3">
-            <Text className="text-lg font-bold text-gray-800">New Arrivals</Text>
-            <TouchableOpacity>
-              <Text className="text-blue-500">See All</Text>
-            </TouchableOpacity>
+          <View>
+            <Text className="text-lg text-center font-bold text-gray-800">New Arrivals</Text>
           </View>
           <ScrollView 
             horizontal 
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingLeft: 16 }}
           >
-            {newArrivals.map((item, index) => renderProductItem(item, index))}
+            {newArrivals.map((item, index) => productItemJust(item, index))}
           </ScrollView>
         </Animated.View>
         
@@ -202,7 +230,11 @@ const HomeScreen = () => {
               </TouchableOpacity>
               </View>
           </View>
-          </Animated.View>
+          </Animated.View> 
+
+          <View>
+            <FollowUsSection />
+          </View>
       </ScrollView>
     </View>
   );

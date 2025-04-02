@@ -1,8 +1,9 @@
 import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { products } from "../../data/products";
+// import { products } from "../../../data/products";
+import products from "../../../data/products"; // JSON file se import kiya
 
-export default function ProductList() {
+export default function Product() {
   const router = useRouter();
 
   return (

@@ -5,7 +5,7 @@ import Animated, { FadeIn, FadeInUp, useAnimatedStyle, useSharedValue, withSprin
 import Carousel from 'react-native-reanimated-carousel';
 import { AntDesign, Feather, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import Header from '../../components/Header';
+import Header from '../../../components/Header';
 
 const { width } = Dimensions.get('window');
 

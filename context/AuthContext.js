@@ -25,12 +25,21 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  const logout = async () => {
+    try {
+      await signOut(auth);  // Firebase ka built-in logout function
+      setUser(null);  // User state ko null kar diya
+    } catch (error) {
+      console.error("Logout Error:", error.message);
+    }
+  };
+
   const signOut = async () => {
     await firebaseSignOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signOut, logout }}>
       {children}
     </AuthContext.Provider>
   );

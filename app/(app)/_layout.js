@@ -1,132 +1,80 @@
-// // app/(app)/_layout.js
-// import { Tabs } from 'expo-router';
-// import { Ionicons } from '@expo/vector-icons';
-// import { BlurView } from 'expo-blur';
-// import Animated, { FadeInDown } from 'react-native-reanimated';
-// import { View } from 'react-native';
+import { Tabs } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
 
-// export default function AppLayout() {
-//   return (
-//     <Tabs
-//       screenOptions={{
-//         tabBarShowLabel: true,
-//         tabBarStyle: {
-//           position: 'absolute',
-//           bottom: 20,
-//           left: 20,
-//           right: 20,
-//           elevation: 0,
-//           borderRadius: 15,
-//           height: 60,
-//           backgroundColor: 'rgba(255, 255, 255, 0.9)',
-//           borderTopWidth: 0,
-//           shadowColor: '#000',
-//           shadowOffset: {
-//             width: 0,
-//             height: 5,
-//           },
-//           shadowOpacity: 0.1,
-//           shadowRadius: 10,
-//         },
-//         tabBarLabelStyle: {
-//           fontWeight: '600',
-//           fontSize: 12,
-//         },
-//         tabBarBackground: () => (
-//           <BlurView tint="light" intensity={30} style={{ flex: 1, borderRadius: 15 }} />
-//         ),
-//       }}
-//     >
-//       <Tabs.Screen
-//         name="home"
-//         options={{
-//           title: 'Home',
-//           tabBarIcon: ({ color, focused }) => (
-//             <Animated.View
-//               entering={FadeInDown.delay(100).springify()}
-//             >
-//               <Ionicons
-//                 name={focused ? 'home' : 'home-outline'}
-//                 size={24}
-//                 color={color}
-//               />
-//             </Animated.View>
-//           ),
-//           tabBarActiveTintColor: '#007AFF',
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="search"
-//         options={{
-//           title: 'Search',
-//           tabBarIcon: ({ color, focused }) => (
-//             <Animated.View
-//               entering={FadeInDown.delay(200).springify()}
-//             >
-//               <Ionicons
-//                 name={focused ? 'search' : 'search-outline'}
-//                 size={24}
-//                 color={color}
-//               />
-//             </Animated.View>
-//           ),
-//           tabBarActiveTintColor: '#007AFF',
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="categories"
-//         options={{
-//           title: 'Categories',
-//           tabBarIcon: ({ color, focused }) => (
-//             <Animated.View
-//               entering={FadeInDown.delay(300).springify()}
-//             >
-//               <Ionicons
-//                 name={focused ? 'grid' : 'grid-outline'}
-//                 size={24}
-//                 color={color}
-//               />
-//             </Animated.View>
-//           ),
-//           tabBarActiveTintColor: '#007AFF',
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="cart"
-//         options={{
-//           title: 'Cart',
-//           tabBarIcon: ({ color, focused }) => (
-//             <Animated.View
-//               entering={FadeInDown.delay(400).springify()}
-//             >
-//               <Ionicons
-//                 name={focused ? 'cart' : 'cart-outline'}
-//                 size={24}
-//                 color={color}
-//               />
-//             </Animated.View>
-//           ),
-//           tabBarActiveTintColor: '#007AFF',
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="profile"
-//         options={{
-//           title: 'Profile',
-//           tabBarIcon: ({ color, focused }) => (
-//             <Animated.View
-//               entering={FadeInDown.delay(500).springify()}
-//             >
-//               <Ionicons
-//                 name={focused ? 'person' : 'person-outline'}
-//                 size={24}
-//                 color={color}
-//               />
-//             </Animated.View>
-//           ),
-//           tabBarActiveTintColor: '#007AFF',
-//         }}
-//       />
-//     </Tabs>
-//   );
-// }
+export default function AppLayout() {
+  const route = useRoute();
+
+  return (
+    <Tabs
+      screenOptions={({ route }) => ({
+        tabBarActiveTintColor: '#3498db',
+        tabBarInactiveTintColor: '#95a5a6',
+        tabBarStyle: route.name === 'profile' ? { display: 'none' } : {
+          backgroundColor: '#ffffff',
+          borderTopWidth: 1,
+          borderTopColor: '#e0e0e0',
+          paddingBottom: 5,
+          height: 60,
+        },
+      })}
+    >
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" size={size} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          title: 'Cart',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="cart" size={size} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: 'Search',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search" size={size} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      
+      {/* This is a special configuration to handle the product folder */}
+      <Tabs.Screen
+        name="product/[id]"
+        options={{
+          href: null, // This makes the tab not appear in the tab bar
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="product/index"
+        options={{
+          href: null, // This makes the tab not appear in the tab bar
+          headerShown: false,
+        }}
+      />
+    </Tabs>
+  );
+}
