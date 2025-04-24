@@ -12,7 +12,7 @@ export default function Profile() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.replace('/home'); // Redirect to home after logout
+      router.replace('/login'); // Redirect to home after logout
     } catch (error) {
       console.error('Logout Error:', error.message);
     }
